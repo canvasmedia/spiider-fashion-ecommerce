@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-black: #111827;
+    --color-white: #FFFFFF;
+    --color-offwhite: #F7F6F3;
+    --color-gold: #C9A227;
+    --color-gold-light: #E8C766;
+    --color-gold-dark: #B8860B;
+    --color-gold-gradient: linear-gradient(135deg, #C9A227 0%, #E8C766 50%, #B8860B 100%);
+    --color-blue: #1E3A8A;
+    --color-sale: #B3261E;
+    --shadow-color: rgba(17, 24, 39, 0.10);
+
+    --motion-fast: 0.2s;
+    --motion-base: 0.35s;
+    --motion-slow: 0.5s;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-offwhite);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 2px;
+  }
+
+  /* Gold focus ring */
+  *:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Tabular numerals for prices */
+  .price {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  .text-gold { color: var(--color-gold); }
+  .text-gold-light { color: var(--color-gold-light); }
+  .bg-gold { background-color: var(--color-gold); }
+  .bg-offwhite { background-color: var(--color-offwhite); }
+  .bg-brand-black { background-color: var(--color-black); }
+  .border-gold { border-color: var(--color-gold); }
+  .border-blue { border-color: var(--color-blue); }
+
+  /* Typography utilities */
+  .display-headline {
+    font-size: clamp(2.5rem, 8vw, 7rem);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+
+  .overline-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* Gold gradient text */
+  .text-gold-gradient {
+    background: var(--color-gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glassmorphism */
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201, 162, 39, 0.15);
+  }
+
+  /* Gold animated underline */
+  .gold-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .gold-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-gold);
+    transition: width var(--motion-base) var(--ease-out);
+  }
+  .gold-underline:hover::after,
+  .group:hover .gold-underline::after {
+    width: 100%;
+  }
+
+  /* Shimmer skeleton */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-offwhite) 25%,
+      rgba(201, 162, 39, 0.08) 50%,
+      var(--color-offwhite) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Marquee */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Ken Burns zoom */
+  .ken-burns {
+    animation: kenBurns 8s ease-in-out infinite alternate;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ken-burns { animation: none; }
+  }
+
+  @keyframes kenBurns {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+  }
+
+  /* Cart fly animation */
+  @keyframes flyToCart {
+    0% { opacity: 1; transform: scale(1) translate(0, 0); }
+    100% { opacity: 0; transform: scale(0.3) translate(var(--fly-x, 200px), var(--fly-y, -200px)); }
+  }
+
+  /* Heartbeat */
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.35); }
+  }
+  .animate-heartbeat {
+    animation: heartbeat 0.3s ease-in-out;
+  }
+
+  /* Gold pulse */
+  @keyframes goldPulse {
+    0% { box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(201, 162, 39, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(201, 162, 39, 0); }
+  }
+  .pulse-gold {
+    animation: goldPulse 0.6s ease-out;
+  }
+
+  /* Perimeter border draw */
+  @keyframes borderDraw {
+    from { stroke-dashoffset: 1000; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* Hide scrollbar but keep scroll */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Cursor custom */
+  .custom-cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 8px; height: 8px;
+    background: var(--color-gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+  }
+
+  .custom-cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1.5px solid rgba(201, 162, 39, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+  }
+}
+
+
