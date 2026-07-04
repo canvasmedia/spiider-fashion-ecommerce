@@ -5,8 +5,6 @@ import { Footer } from '@/components/Footer';
 import { PromoStrip } from '@/components/PromoStrip';
 import { CustomCursor } from '@/components/CustomCursor';
 
-export const runtime = 'edge';
-
 export const metadata: Metadata = {
   title: 'Spiider — Denim. Style. You.',
   description: 'Premium Indian fashion brand. Denim, Ethnic Wear, T-Shirts & Kids — one confident identity.',
